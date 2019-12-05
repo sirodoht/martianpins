@@ -1,0 +1,36 @@
+{% extends 'main/layout.html' %}
+
+{% block content %}
+<section class="uploadpin">
+    <h2>Upload + pin file</h2>
+    <form enctype="multipart/form-data" action="/pin/upload" method="post">
+        <input type="file" name="uploadfile">
+        {% csrf_token %}
+        <br><input type="submit" value="upload + pin">
+    </form>
+</section>
+
+<section class="hashpin">
+    <h2>Pin file by hash</h2>
+    <form action="/hashpin/" method="post">
+        <input type="text" name="ipfs_hash" placeholder="Hash...">
+        <input type="text" name="name" placeholder="Pin name...">
+        {% csrf_token %}
+        <input type="submit" value="pin">
+    </form>
+</section>
+
+<section class="pins">
+    <h2>Pins</h2>
+    {% for p in pins %}
+    <div class="pins-item">
+        <div class="pins-item-name">{{ p.name }}</div>
+        <div class="pins-item-hash">{{ p.ipfs_hash }}</div>
+        <div class="pins-item-meta">
+            <a href="#">del</a> -
+            <a href="#">link</a> - 22.4K
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
