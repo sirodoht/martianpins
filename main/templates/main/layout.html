@@ -22,11 +22,11 @@
     </nav>
 
     {% if messages %}
+        {% for message in messages %}
         <div class="alert">
-            {% for message in messages %}
-                > {{ message }}
-            {% endfor %}
+            > {{ message }}
         </div>
+        {% endfor %}
     {% endif %}
 
     {% block content %}

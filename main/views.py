@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.decorators.http import require_http_methods, require_safe
 
-from main import forms, models
+from main import forms, models, tasks
 
 
 @require_safe
@@ -36,11 +36,12 @@ def hashpin(request):
             pin = form.save(commit=False)
             pin.user = request.user
             pin.save()
-            messages.success(request, "Pin created")
+            tasks.ipfs_pin_add(pin.ipfs_hash)
+            messages.info(request, "INFO: Pin submitted.")
             return redirect("main:index")
         else:
             for field, errors in form.errors.items():
-                messages.error(request, f"{field}: {','.join(errors)}")
+                messages.error(request, f"ERROR: {field}: {','.join(errors)}")
     else:
         form = forms.CreateHashPin()
 
