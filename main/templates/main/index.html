@@ -3,8 +3,8 @@
 {% block content %}
 <section class="uploadpin">
     <h2>Upload + pin file</h2>
-    <form enctype="multipart/form-data" action="/pin/upload" method="post">
-        <input type="file" name="uploadfile">
+    <form enctype="multipart/form-data" action="{% url 'main:uploadpin' %}" method="post">
+        <input type="file" name="ipfs_file">
         {% csrf_token %}
         <br><input type="submit" value="upload + pin">
     </form>
@@ -12,7 +12,7 @@
 
 <section class="hashpin">
     <h2>Pin file by hash</h2>
-    <form action="/hashpin/" method="post">
+    <form action="{% url 'main:hashpin' %}" method="post">
         <input type="text" name="ipfs_hash" placeholder="IPFS Hash...">
         <input type="text" name="name" placeholder="Pin name...">
         {% csrf_token %}
