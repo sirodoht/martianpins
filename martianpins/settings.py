@@ -72,6 +72,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "martianpins.wsgi.application"
 
+AUTH_USER_MODEL = "main.MartianUser"
+
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
