@@ -16,8 +16,10 @@ flake8==3.7.9
 isort==4.3.21
 mccabe==0.6.1             # via flake8
 pathspec==0.6.0           # via black
+psycopg2-binary==2.8.4
 pycodestyle==2.5.0        # via flake8
 pyflakes==2.1.1           # via flake8
+python-dotenv==0.10.3
 pytz==2019.3              # via django
 regex==2019.11.1          # via black
 sqlparse==0.3.0           # via django

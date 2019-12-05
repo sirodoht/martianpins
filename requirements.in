@@ -1,4 +1,5 @@
 django
+psycopg2-binary
 black
 isort
 flake8
