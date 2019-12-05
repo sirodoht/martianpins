@@ -216,6 +216,10 @@ nav a {
     padding: 4px 8px;
 }
 
+nav a:hover {
+    text-decoration: none;
+}
+
 nav a:focus {
     border-color: #000;
 }
@@ -259,10 +263,16 @@ textarea {
 }
 
 input[type="submit"] {
-    border: 1px solid #000;
+    border: 3px solid #ccc;
+    padding-left: 16px;
+    padding-right: 16px;
     cursor: pointer;
     background: #fff;
     line-height: 1.5;
+}
+
+input[type="submit"]:hover {
+    border-color: #aaa;
 }
 
 .helptext {
