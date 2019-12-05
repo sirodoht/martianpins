@@ -9,6 +9,7 @@ asgiref==3.2.3            # via django
 attrs==19.3.0             # via black
 black==19.10b0
 click==7.0                # via black
+dj-database-url==0.5.0
 django==3.0
 entrypoints==0.3          # via flake8
 flake8==3.7.9
@@ -22,3 +23,4 @@ regex==2019.11.1          # via black
 sqlparse==0.3.0           # via django
 toml==0.10.0              # via black
 typed-ast==1.4.0          # via black
+uwsgi==2.0.18

@@ -3,3 +3,5 @@ black
 isort
 flake8
 uwsgi
+dj-database-url
+python-dotenv
