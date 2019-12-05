@@ -1,0 +1,5 @@
+django
+black
+isort
+flake8
+uwsgi
