@@ -1,4 +1,4 @@
-django
+django==2.2.8
 psycopg2-binary
 black
 isort
@@ -6,3 +6,5 @@ flake8
 uwsgi
 dj-database-url
 python-dotenv
+django-background-tasks
+requests
