@@ -9,4 +9,5 @@ app_name = "main"
 urlpatterns = [
     path("", views.index, name="index"),
     path("hashpin/", views.hashpin, name="hashpin"),
+    path("uploadpin/", views.uploadpin, name="uploadpin"),
 ]

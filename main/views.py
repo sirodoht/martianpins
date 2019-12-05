@@ -31,18 +31,39 @@ class SignUp(generic.CreateView):
 @login_required
 def hashpin(request):
     if request.method == "POST":
-        form = forms.CreateHashPin(request.POST)
+        form = forms.CreateHashPinForm(request.POST)
         if form.is_valid():
             pin = form.save(commit=False)
             pin.user = request.user
             pin.save()
             tasks.ipfs_pin_add(pin.ipfs_hash)
             messages.info(request, "INFO: Pin submitted.")
-            return redirect("main:index")
         else:
             for field, errors in form.errors.items():
                 messages.error(request, f"ERROR: {field}: {','.join(errors)}")
     else:
-        form = forms.CreateHashPin()
+        form = forms.CreateHashPinForm()
+
+    return redirect("main:index")
+
+
+@require_http_methods(["GET", "POST"])
+@login_required
+def uploadpin(request):
+    if request.method == "POST":
+        form = forms.UploadHashPinForm(request.POST, request.FILES)
+        if form.is_valid():
+            ipfs_file = request.FILES["ipfs_file"]
+            ipfs_file_path = f"/tmp/{ipfs_file.name}"
+            with open(ipfs_file_path, "wb+") as destination:
+                for chunk in ipfs_file.chunks():
+                    destination.write(chunk)
+            tasks.ipfs_add(ipfs_file_path)
+            messages.info(request, "INFO: IPFS add operation started.")
+        else:
+            for field, errors in form.errors.items():
+                messages.error(request, f"ERROR: {field}: {','.join(errors)}")
+    else:
+        form = forms.UploadHashPinForm()
 
     return redirect("main:index")
