@@ -13,7 +13,7 @@
 <section class="hashpin">
     <h2>Pin file by hash</h2>
     <form action="/hashpin/" method="post">
-        <input type="text" name="ipfs_hash" placeholder="Hash...">
+        <input type="text" name="ipfs_hash" placeholder="IPFS Hash...">
         <input type="text" name="name" placeholder="Pin name...">
         {% csrf_token %}
         <input type="submit" value="pin">

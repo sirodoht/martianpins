@@ -21,6 +21,14 @@
         {% endif %}
     </nav>
 
+    {% if messages %}
+        <div class="alert">
+            {% for message in messages %}
+                > {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% block content %}
     {% endblock %}
 </body>

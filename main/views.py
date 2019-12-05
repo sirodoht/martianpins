@@ -13,7 +13,11 @@ def index(request):
     return render(
         request,
         "main/index.html",
-        {"pins": models.Pin.objects.filter(user=request.user)},
+        {
+            "pins": models.Pin.objects.filter(user=request.user)
+            if request.user.is_authenticated
+            else []
+        },
     )
 
 
@@ -35,12 +39,9 @@ def hashpin(request):
             messages.success(request, "Pin created")
             return redirect("main:index")
         else:
-            print(form.errors)
+            for field, errors in form.errors.items():
+                messages.error(request, f"{field}: {','.join(errors)}")
     else:
         form = forms.CreateHashPin()
 
     return redirect("main:index")
-    # return render(
-    #     request,
-    #     "main/index.html",
-    # )
