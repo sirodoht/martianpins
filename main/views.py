@@ -30,19 +30,22 @@ class SignUp(generic.CreateView):
 @require_http_methods(["GET", "POST"])
 @login_required
 def hashpin(request):
-    if request.method == "POST":
-        form = forms.CreateHashPinForm(request.POST)
-        if form.is_valid():
-            pin = form.save(commit=False)
-            pin.user = request.user
-            pin.save()
-            tasks.ipfs_pin_add(pin.ipfs_hash)
-            messages.info(request, "INFO: Pin submitted.")
-        else:
-            for field, errors in form.errors.items():
-                messages.error(request, f"ERROR: {field}: {','.join(errors)}")
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    if request.method == "GET":
+        return redirect("main:index")
+
+    form = forms.CreateHashPinForm(request.POST)
+    if form.is_valid():
+        pin = form.save(commit=False)
+        pin.user = request.user
+        pin.save()
+        tasks.ipfs_pin_add(pin.ipfs_hash)
+        messages.info(request, "INFO: Pin submitted.")
     else:
-        form = forms.CreateHashPinForm()
+        for field, errors in form.errors.items():
+            messages.error(request, f"ERROR: {field}: {','.join(errors)}")
 
     return redirect("main:index")
 
@@ -50,20 +53,23 @@ def hashpin(request):
 @require_http_methods(["GET", "POST"])
 @login_required
 def uploadpin(request):
-    if request.method == "POST":
-        form = forms.UploadHashPinForm(request.POST, request.FILES)
-        if form.is_valid():
-            ipfs_file = request.FILES["ipfs_file"]
-            ipfs_file_path = f"/tmp/{ipfs_file.name}"
-            with open(ipfs_file_path, "wb+") as destination:
-                for chunk in ipfs_file.chunks():
-                    destination.write(chunk)
-            tasks.ipfs_add(ipfs_file_path)
-            messages.info(request, "INFO: IPFS add operation started.")
-        else:
-            for field, errors in form.errors.items():
-                messages.error(request, f"ERROR: {field}: {','.join(errors)}")
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    if request.method == "GET":
+        return redirect("main:index")
+
+    form = forms.UploadHashPinForm(request.POST, request.FILES)
+    if form.is_valid():
+        ipfs_file = request.FILES["ipfs_file"]
+        ipfs_file_path = f"/tmp/{ipfs_file.name}"
+        with open(ipfs_file_path, "wb+") as destination:
+            for chunk in ipfs_file.chunks():
+                destination.write(chunk)
+        tasks.ipfs_add(ipfs_file_path)
+        messages.info(request, "INFO: IPFS add operation started.")
     else:
-        form = forms.UploadHashPinForm()
+        for field, errors in form.errors.items():
+            messages.error(request, f"ERROR: {field}: {','.join(errors)}")
 
     return redirect("main:index")
