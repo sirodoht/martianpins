@@ -12,3 +12,4 @@ class MartianUser(AbstractUser):
 class Pin(models.Model):
     name = models.CharField(max_length=100)
     ipfs_hash = models.CharField(max_length=100)
+    user = models.ForeignKey(MartianUser, on_delete=models.CASCADE)
