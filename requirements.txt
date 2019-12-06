@@ -7,7 +7,7 @@
 appdirs==1.4.3            # via black
 attrs==19.3.0             # via black
 black==19.10b0
-certifi==2019.11.28       # via requests
+certifi==2019.11.28       # via requests, sentry-sdk
 chardet==3.0.4            # via requests
 click==7.0                # via black
 dj-database-url==0.5.0
@@ -27,10 +27,11 @@ pyflakes==2.1.1           # via flake8
 pytz==2019.3              # via django
 regex==2019.11.1          # via black
 requests==2.22.0
+sentry-sdk==0.13.5
 six==1.13.0               # via django-background-tasks, django-compat
 sqlparse==0.3.0           # via django
 toml==0.10.0              # via black
 typed-ast==1.4.0          # via black
-urllib3==1.25.7           # via requests
+urllib3==1.25.7           # via requests, sentry-sdk
 uwsgi==2.0.18
 whitenoise==4.1.4

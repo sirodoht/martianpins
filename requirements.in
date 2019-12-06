@@ -9,3 +9,4 @@ django-dotenv
 django-background-tasks
 requests
 whitenoise
+sentry-sdk
