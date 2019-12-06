@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:11.6
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+  web:
+    # Docker hack to wait until postgres is up
+    command: >
+      bash -c "while ! nc -w 1 -z db 5432;
+               do sleep 0.3;
+               done;
+
+               ./manage.py migrate;
+               exec /usr/local/bin/uwsgi --chdir=/code --ini=/code/uwsgi.ini"
+    build: .
+    image: martianpins
+    volumes:
+      - .:/code
+    ports:
+      - "5000:5000"
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/postgres
