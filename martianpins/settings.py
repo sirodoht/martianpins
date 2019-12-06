@@ -120,6 +120,9 @@ USE_TZ = False
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "_static")
 
+MEDIA_URL = "/uploads/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "_uploads")
+
 
 # Email
 
