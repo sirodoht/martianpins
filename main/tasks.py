@@ -20,3 +20,13 @@ def ipfs_pin_add(ipfs_hash):
     if response.status_code == 200:
         for p in response.json()["Pins"]:
             print(f"Pin add for {p}")
+
+@background(schedule=1)
+def ipfs_pin_rm(ipfs_hash):
+    response = requests.get("http://localhost:5001/api/v0/pin/rm?arg=" + ipfs_hash)
+    if response.status_code == 200:
+        for p in response.json()["Pins"]:
+            print(f"Pin rm for {p}")
+    else:
+        print(f"Error: Pin rm for {ipfs_hash}.")
+        print(f"Error: Status code {response.status_code}.")
