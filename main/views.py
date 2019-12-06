@@ -67,6 +67,11 @@ def uploadpin(request):
     form = forms.UploadHashPinForm(request.POST, request.FILES)
     if form.is_valid():
         ipfs_file = request.FILES["ipfs_file"]
+
+        if ipfs_file.size > 11000000:  # 11MB
+            messages.error(request, "ERROR: File too big. Limit is 10MB")
+            return redirect("main:index")
+
         ipfs_file_path = f"/tmp/{ipfs_file.name}"
         with open(ipfs_file_path, "wb+") as destination:
             for chunk in ipfs_file.chunks():
