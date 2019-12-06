@@ -156,6 +156,5 @@ if not DEBUG:
 # Sentry
 
 if not DEBUG:
-    sentry_sdk.init(
-        dsn=os.environ.get("SENTRY_DSN", ""), integrations=[DjangoIntegration()]
-    )
+    SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
+    sentry_sdk.init(dsn=SENTRY_DSN, integrations=[DjangoIntegration()])
