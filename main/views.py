@@ -78,3 +78,31 @@ def uploadpin(request):
             messages.error(request, f"ERROR: {field}: {','.join(errors)}")
 
     return redirect("main:index")
+
+
+@require_http_methods(["GET", "POST"])
+@login_required
+def rm_pin(request, pin_id):
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    if request.method == "GET":
+        return redirect("main:index")
+
+    form = forms.PinDeletionForm({"id": pin_id})
+    if form.is_valid():
+        pin = models.Pin.objects.get(id=pin_id)
+
+        # if only user to have set ipfs file, then delete it
+        # otherwise, delete only pin
+        if models.Pin.objects.filter(ipfs_file=pin.ipfs_file).count() == 1:
+            pin.ipfs_file.delete()
+            tasks.ipfs_pin_rm(pin.ipfs_file.ipfs_hash)
+
+        pin.delete()
+        messages.info(request, "INFO: Pin delete operation started.")
+    else:
+        for field, errors in form.errors.items():
+            messages.error(request, f"ERROR: {field}: {','.join(errors)}")
+
+    return redirect("main:index")
