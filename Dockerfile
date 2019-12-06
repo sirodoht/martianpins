@@ -15,4 +15,3 @@ RUN pip install -Ur /code/requirements.txt
 
 WORKDIR /code
 COPY . /code/
-RUN /code/manage.py collectstatic --noinput

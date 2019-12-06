@@ -15,6 +15,7 @@ services:
                done;
 
                ./manage.py migrate;
+               ./manage.py collectstatic --noinput;
                exec /usr/local/bin/uwsgi --chdir=/code --ini=/code/uwsgi.ini"
     build: .
     image: martianpins
@@ -27,4 +28,3 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/postgres
-      NODEBUG: 1
