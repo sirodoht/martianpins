@@ -55,7 +55,7 @@ python manage.py runserver
 
 Or, run the production-grade `uwsgi` server:
 ```sh
-uwsgi --ini=uwsgi.ini -H venv/
+uwsgi --ini=uwsgi.ini
 ```
 
 > Note: The `uwsgi` method does not read the `.env` file, so in this case you need to set the env vars in your shell.

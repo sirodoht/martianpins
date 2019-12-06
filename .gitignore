@@ -3,3 +3,4 @@ venv/
 *.pyc
 _static/
 db_data/
+pid-uwsgi
