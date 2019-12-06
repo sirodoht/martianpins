@@ -16,11 +16,23 @@ class MartianUserChangeForm(UserChangeForm):
         fields = ["username", "email", "about"]
 
 
-class CreateHashPinForm(forms.ModelForm):
+class PinCreationForm(forms.ModelForm):
     class Meta:
         model = models.Pin
-        fields = ["name", "ipfs_hash"]
+        fields = ["name"]
 
 
-class UploadHashPinForm(forms.Form):
+class PinDeletionForm(forms.ModelForm):
+    class Meta:
+        model = models.Pin
+        fields = ["id"]
+
+
+class IPFSFileForm(forms.ModelForm):
+    class Meta:
+        model = models.IPFSFile
+        fields = ["ipfs_hash"]
+
+
+class UploadIPFSFileForm(forms.Form):
     ipfs_file = forms.FileField()
