@@ -8,3 +8,4 @@ dj-database-url
 django-dotenv
 django-background-tasks
 requests
+whitenoise
