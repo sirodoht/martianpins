@@ -1,3 +1,5 @@
+from random import randint
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
@@ -34,22 +36,32 @@ class SignUp(generic.CreateView):
 
 @require_http_methods(["GET", "POST"])
 @login_required
-def hashpin(request):
+def hash_pin(request):
     if not request.user.is_authenticated:
         return redirect("login")
 
     if request.method == "GET":
         return redirect("main:index")
 
-    form = forms.CreateHashPinForm(request.POST)
-    if form.is_valid():
-        pin = form.save(commit=False)
+    form_pin = forms.PinCreationForm(request.POST)
+    form_ipfs_file = forms.IPFSFileForm(request.POST)
+    if form_pin.is_valid() and form_ipfs_file.is_valid():
+        ipfs_file, _ = models.IPFSFile.objects.get_or_create(
+            ipfs_hash=form_ipfs_file.cleaned_data["ipfs_hash"]
+        )
+
+        pin = form_pin.save(commit=False)
+        while models.Pin.objects.filter(user=request.user, name=pin.name):
+            pin.name = f"{pin.name}-{randint(0, 100_000)}"
+        pin.ipfs_file = ipfs_file
         pin.user = request.user
         pin.save()
-        tasks.ipfs_pin_add(pin.ipfs_hash)
-        messages.info(request, "INFO: Pin submitted.")
+        tasks.ipfs_pin_add(ipfs_file.ipfs_hash)
+        messages.info(request, "INFO: Pin add operation started.")
     else:
-        for field, errors in form.errors.items():
+        for field, errors in form_pin.errors.items():
+            messages.error(request, f"ERROR: {field}: {','.join(errors)}")
+        for field, errors in form_ipfs_file.errors.items():
             messages.error(request, f"ERROR: {field}: {','.join(errors)}")
 
     return redirect("main:index")
@@ -57,14 +69,14 @@ def hashpin(request):
 
 @require_http_methods(["GET", "POST"])
 @login_required
-def uploadpin(request):
+def upload_pin(request):
     if not request.user.is_authenticated:
         return redirect("login")
 
     if request.method == "GET":
         return redirect("main:index")
 
-    form = forms.UploadHashPinForm(request.POST, request.FILES)
+    form = forms.UploadIPFSFileForm(request.POST, request.FILES)
     if form.is_valid():
         ipfs_file = request.FILES["ipfs_file"]
 
@@ -76,7 +88,8 @@ def uploadpin(request):
         with open(ipfs_file_path, "wb+") as destination:
             for chunk in ipfs_file.chunks():
                 destination.write(chunk)
-        tasks.ipfs_add(ipfs_file_path)
+
+        tasks.ipfs_add(ipfs_file.name, ipfs_file_path, request.user.id)
         messages.info(request, "INFO: IPFS add operation started.")
     else:
         for field, errors in form.errors.items():
