@@ -21,6 +21,12 @@
         {% endif %}
     </nav>
 
+    {% if request.path == "/" %}
+    <section class="description">
+        IPFS pinning service &mdash; alpha version
+    </section>
+    {% endif %}
+
     {% if messages %}
         {% for message in messages %}
         <div class="alert">
