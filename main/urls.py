@@ -8,6 +8,8 @@ app_name = "main"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("hashpin/", views.hashpin, name="hashpin"),
-    path("uploadpin/", views.uploadpin, name="uploadpin"),
+    path("terms", views.terms, name="terms"),
+    path("pins/hash/", views.hash_pin, name="hash_pin"),
+    path("pins/upload/", views.upload_pin, name="upload_pin"),
+    path("pins/rm/<int:pin_id>", views.rm_pin, name="rm_pin"),
 ]
