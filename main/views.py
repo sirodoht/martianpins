@@ -21,6 +21,11 @@ def index(request):
     )
 
 
+@require_safe
+def terms(request):
+    return render(request, "main/terms.html")
+
+
 class SignUp(generic.CreateView):
     form_class = forms.MartianUserCreationForm
     success_url = reverse_lazy("login")
