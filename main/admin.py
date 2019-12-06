@@ -15,7 +15,14 @@ admin.site.register(models.MartianUser, MartianUserAdmin)
 
 
 class PinAdmin(admin.ModelAdmin):
-    list_display = ("name", "ipfs_hash")
+    list_display = ("name", "ipfs_file", "user")
 
 
 admin.site.register(models.Pin, PinAdmin)
+
+
+class IPFSFileAdmin(admin.ModelAdmin):
+    list_display = ("ipfs_hash",)
+
+
+admin.site.register(models.IPFSFile, IPFSFileAdmin)
