@@ -2,3 +2,4 @@ venv/
 .env
 *.pyc
 _static/
+db_data/
