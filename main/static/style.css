@@ -194,9 +194,14 @@ a:hover {
     text-decoration: underline;
 }
 
+p {
+    line-height: 23px;
+    color: #555;
+}
+
 nav {
     padding-top: 24px;
-    padding-left: 16px;
+    padding-left: 13px;
 }
 
 .nav-brand {
@@ -225,7 +230,7 @@ nav a:focus {
 }
 
 section {
-    padding-left: 24px;
+    padding-left: 22px;
     max-width: 432px;
     margin-bottom: 32px;
 }
@@ -275,6 +280,16 @@ input[type="submit"]:hover {
     border-color: #aaa;
 }
 
+.inline {
+    display: inline;
+}
+
+.inline > input[type="submit"] {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
 .alert {
     margin-left: 24px;
     margin-top: 16px;
@@ -298,6 +313,15 @@ ul {
 }
 
 /* index */
+.description {
+    margin-bottom: 0;
+    color: #aaa;
+    border-left: 14px solid #ccc;
+    padding-left: 7px;
+    margin-left: 1px;
+    margin-top: 16px;
+}
+
 .uploadpin input[type="submit"] {
     margin-top: 8px;
 }
@@ -325,18 +349,11 @@ ul {
     color: #777;
 }
 
-.pins-item-meta > a:first-child {
+.pins-item-meta > form:first-child > input {
     color: #f00;
     text-decoration: none;
 }
-.pins-item-meta > a:first-child:hover {
-    text-decoration: underline;
-}
 
-.pins-item-meta > a:nth-child(2) {
-    color: #00f;
-    text-decoration: none;
-}
-.pins-item-meta > a:nth-child(2):hover {
+.pins-item-meta > form:first-child:hover > input {
     text-decoration: underline;
 }
