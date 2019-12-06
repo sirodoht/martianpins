@@ -13,6 +13,7 @@ click==7.0                # via black
 dj-database-url==0.5.0
 django-background-tasks==1.2.0
 django-compat==1.0.15     # via django-background-tasks
+django-dotenv==1.4.2
 django==2.2.8
 entrypoints==0.3          # via flake8
 flake8==3.7.9
@@ -23,7 +24,6 @@ pathspec==0.6.0           # via black
 psycopg2-binary==2.8.4
 pycodestyle==2.5.0        # via flake8
 pyflakes==2.1.1           # via flake8
-python-dotenv==0.10.3
 pytz==2019.3              # via django
 regex==2019.11.1          # via black
 requests==2.22.0

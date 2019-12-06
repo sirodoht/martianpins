@@ -2,14 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from os.path import dirname, join
 
-from dotenv import load_dotenv
+import dotenv
 
 
 def main():
-    dotenv_path = join(dirname(__file__), ".env")
-    load_dotenv(dotenv_path)
+    dotenv.read_dotenv()
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "martianpins.settings")
     try:
