@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 
 services:
   db:
@@ -7,6 +7,8 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
   web:
     # Docker hack to wait until postgres is up
     command: >
@@ -21,9 +23,25 @@ services:
     image: martianpins
     volumes:
       - .:/code
+      - /tmp/martianpins:/tmp
     ports:
       - "5000:5000"
-      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+  worker:
+    command: >
+      bash -c "while ! nc -w 1 -z db 5432;
+               do sleep 0.3;
+               done;
+
+               exec /usr/local/bin/python /code/manage.py process_tasks"
+    build: .
+    image: martianpins
+    volumes:
+      - .:/code
+      - /tmp/martianpins:/tmp
     depends_on:
       - db
     env_file:
