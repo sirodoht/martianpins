@@ -1,36 +1,52 @@
 {% extends 'main/layout.html' %}
 
+{% block title %}IPFS pinning service{% endblock %}
+
 {% block content %}
 <section class="uploadpin">
-    <h2>Upload + pin file</h2>
-    <form enctype="multipart/form-data" action="{% url 'main:uploadpin' %}" method="post">
+    <h2>Upload + pin file (max: 10MB)</h2>
+    <form enctype="multipart/form-data" action="{% url 'main:upload_pin' %}" method="post">
         <input type="file" name="ipfs_file">
         {% csrf_token %}
-        <br><input type="submit" value="upload + pin">
+        <br><input type="submit" value="upload + pin{% if not request.user.is_authenticated %}*{% endif %}">
     </form>
 </section>
 
 <section class="hashpin">
     <h2>Pin file by hash</h2>
-    <form action="{% url 'main:hashpin' %}" method="post">
+    <form action="{% url 'main:hash_pin' %}" method="post">
         <input type="text" name="ipfs_hash" placeholder="IPFS Hash...">
         <input type="text" name="name" placeholder="Pin name...">
         {% csrf_token %}
-        <input type="submit" value="pin">
+        <input type="submit" value="pin{% if not request.user.is_authenticated %}*{% endif %}">
     </form>
 </section>
 
+{% if request.user.is_authenticated %}
 <section class="pins">
     <h2>Pins</h2>
     {% for p in pins %}
     <div class="pins-item">
         <div class="pins-item-name">{{ p.name }}</div>
-        <div class="pins-item-hash">{{ p.ipfs_hash }}</div>
+        <div class="pins-item-hash" {% if p.deleted_at %}style="text-decoration: line-through; color: #ccc;"{% endif %}>{{ p.ipfs_file.ipfs_hash }}</div>
         <div class="pins-item-meta">
-            <a href="#">del</a> -
-            <a href="#">link</a> - 22.4K
+            {% if not p.deleted_at %}
+            <form action="{% url 'main:rm_pin' p.id %}" method="post" class="inline" onsubmit="return confirm('Are you sure?');">
+                {% csrf_token %}
+                <input type="submit" value="del">
+            </form> -
+            <a href="https://ipfs.martianpins.com/ipfs/{{ p.ipfs_file.ipfs_hash }}">link</a>
+            {% endif %}
+            <!-- - 22.4K -->
         </div>
     </div>
+    {% empty %}
+    (no pins)
     {% endfor %}
 </section>
+{% else %}
+<section>
+    <p>* requires login</p>
+</section>
+{% endif %}
 {% endblock %}
