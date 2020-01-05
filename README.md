@@ -1,6 +1,6 @@
-# martianpins.com
+# martianpins
 
-> IPFS pinning service.
+> [IPFS](https://ipfs.io/) pinning service.
 
 ## Development
 
@@ -33,6 +33,9 @@ SECRET_KEY="thisisthesecretkey"
 DATABASE_URL="postgres://postgres:postgres@127.0.0.1:5432/martianpins"
 EMAIL_HOST_USER="smtp_user"
 EMAIL_HOST_PASSWORD="smtp_password"
+DEFAULT_FROM_EMAIL="Marvin von Martian Pins <marvin@martianpins.com>"
+IPFS_NODE_URL="https://ipfs.martianpins.com"
+SENTRY_DSN="https://0123456b805246cc3c200b97132114rc@sentry.io/000111"
 ```
 
 ### Database
@@ -59,6 +62,13 @@ uwsgi --ini=uwsgi.ini
 ```
 
 > Note: The `uwsgi` method does not read the `.env` file, so in this case you need to set the env vars in your shell.
+
+## Deployment
+
+martianpins needs an IPFS node to work (defined in the `.env` file -- see section "Environment variables").
+Running an IPFS node might not be the easiest and most predictable thing, so take a look at many articles like
+[this one](https://medium.com/@rossbulat/introduction-to-ipfs-set-up-nodes-on-your-network-with-http-gateways-10e21ea689a4)
+before you attempt it.
 
 ## Code linting & formatting
 
