@@ -35,7 +35,7 @@
                 {% csrf_token %}
                 <input type="submit" value="del">
             </form> -
-            <a href="https://ipfs.martianpins.com/ipfs/{{ p.ipfs_file.ipfs_hash }}">link</a>
+            <a href="{{ ipfs_node_url }}/ipfs/{{ p.ipfs_file.ipfs_hash }}">link</a>
             {% endif %}
             <!-- - 22.4K -->
         </div>

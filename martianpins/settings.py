@@ -158,3 +158,8 @@ if not DEBUG:
 if not DEBUG:
     SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
     sentry_sdk.init(dsn=SENTRY_DSN, integrations=[DjangoIntegration()])
+
+
+# IPFS node
+
+IPFS_NODE_URL = os.environ.get("IPFS_NODE_URL")

@@ -8,6 +8,7 @@ from django.views import generic
 from django.views.decorators.http import require_http_methods, require_safe
 
 from main import forms, models, tasks
+from martianpins import settings
 
 
 @require_safe
@@ -18,7 +19,8 @@ def index(request):
         {
             "pins": models.Pin.objects.filter(user=request.user)
             if request.user.is_authenticated
-            else []
+            else [],
+            "ipfs_node_url": settings.IPFS_NODE_URL,
         },
     )
 
