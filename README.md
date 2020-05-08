@@ -1,6 +1,8 @@
 # martianpins
 
-> [IPFS](https://ipfs.io/) pinning service.
+[IPFS](https://ipfs.io/) pinning service.
+
+![screenshot](screenshot.png)
 
 ## Development
 
