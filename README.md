@@ -77,3 +77,7 @@ before you attempt it.
 ```sh
 black . && isort -y && flake8
 ```
+
+## License
+
+MIT
